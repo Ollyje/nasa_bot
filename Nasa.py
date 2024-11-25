@@ -18,10 +18,10 @@ messages = [
 
 ]
 
-date = 
+date = "2018-01-03"
 
 def nasa_cme(cme_date):
-	url = f"https://api.nasa.gov/DONKI/CME?startDate={date}&endDate={date}&api_key={nasa_key}"
+	url = f"https://api.nasa.gov/DONKI/CME?startDate=[{date}&endDate={date}&api_key={nasa_key}"
 	response = requests.get(url)
 	data = response.json()
 	print(url)
