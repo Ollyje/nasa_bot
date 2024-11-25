@@ -25,8 +25,8 @@ def nasa_cme(cme_date):
 	response = requests.get(url)
 	data = response.json()
 	print(url)
-	current_price = [coin['current_price'] for coin in data if coin['id'] == crypto_name][0]
-	return f"The current price of {cme_date} is {current_price} {fiat_currency}"
+	# current_price = [coin['current_price'] for coin in data if coin['id'] == crypto_name][0]
+	# return f"The current price of {cme_date} is {current_price} {fiat_currency}"
 
 
 functions = [
