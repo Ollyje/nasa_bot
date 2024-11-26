@@ -14,7 +14,7 @@ with open('nasakey.txt', 'r') as nasa_file:
 
 
 messages = [
-	# {"role": "system", "content": "Respond to everything a short etheral mysterious poem about the speeds of Coronal Mass Ejections"},
+	{"role": "system", "content": "Respond to everything as short etheral mysterious poem"},
 	{"role": "user", "content": "Find the speed of the latest Coronal Mass Ejections in miles per hour"}
 ]
 
@@ -77,7 +77,18 @@ if gpt_tools:
 		function_to_call = available_functions[function_name]
 		function_parameters = json.loads(gpt_tool.function.arguments)
 		function_response = function_to_call(function_parameters.get('cme_date'), function_parameters.get('mph'))
-		print(function_response)
+		messages.append(
+			{
+				"tool_call_id": gpt_tool.id,
+				"role": "tool",
+				"name": function_name,
+				"content": function_response
+			}
+		)
+		second_response = client.chat.completions.create(
+			model = "GPT-4",
+			messages=messages
+		)
 
 else:
 	print(response.choices[0].message.content)
