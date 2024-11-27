@@ -14,14 +14,13 @@ with open('nasakey.txt', 'r') as nasa_file:
 
 
 messages = [
-	{"role": "system", "content": "Always convert kilometres per second to miles per hour"},
+	{"role": "system", "content": "In a poem, always convert kilometres per second to miles per hour"},
 	{"role": "user", "content": "Find the speed of the latest Coronal Mass Ejection in km/s"}
-	# {"role": "user", "content": "Find the speed of a Coronal Mass Ejection on a 2023-01-25 in miles per hour"}
 ]
 
 def cme_speed(cme_date, mph):
 	url = f"https://api.nasa.gov/DONKI/CME?startDate={cme_date}&endDate={cme_date}&api_key={nasa_key}"
-	print(url)
+	# print(url)
 	# print(cme_date)
 	response = requests.get(url)
 	data = response.json()
@@ -97,4 +96,4 @@ if gpt_tools:
 else:
 	print(response.choices[0].message.content)
 
-print(response.choices[0].message)
+# print(response.choices[0].message)
