@@ -14,16 +14,19 @@ with open('nasakey.txt', 'r') as nasa_file:
 
 
 messages = [
-	{"role": "system", "content": "Respond to everything as short etheral mysterious poem"},
-	{"role": "user", "content": "Find the speed of the latest Coronal Mass Ejections in miles per hour"}
+	{"role": "system", "content": "Always convert kilometres per second to miles per hour"},
+	{"role": "user", "content": "Find the speed of the latest Coronal Mass Ejection in km/s"}
+	# {"role": "user", "content": "Find the speed of a Coronal Mass Ejection on a 2023-01-25 in miles per hour"}
 ]
 
 def cme_speed(cme_date, mph):
 	url = f"https://api.nasa.gov/DONKI/CME?startDate={cme_date}&endDate={cme_date}&api_key={nasa_key}"
 	print(url)
+	# print(cme_date)
 	response = requests.get(url)
 	data = response.json()
-	speed = [cme['speed']for cme in data if cme['activityID'] == cme_date][0]
+	# speed = [cme['speed']for cme in data if cme['activityID'] == cme_date][0]
+	speed = data[0]['cmeAnalyses'][0]['speed']
 	return f"The current speed of {cme_date} is {speed} {mph}"
 
 functions = [
@@ -31,7 +34,7 @@ functions = [
 		"type": "function", 
 		"function": {
 			"name": "get_speed",
-			"description": "Gets the speed of a coronal mass ejection in miles per hour",
+			"description": "Gets the speed of a coronal mass ejection in kilometres per second",
 			"parameters": {
 					# letting chatgpt know that it's geting key-value pairs
 				"type": "object",
@@ -89,6 +92,9 @@ if gpt_tools:
 			model = "GPT-4",
 			messages=messages
 		)
+		print(second_response.choices[0].message.content)
 
 else:
 	print(response.choices[0].message.content)
+
+print(response.choices[0].message)
